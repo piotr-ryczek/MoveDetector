@@ -3,8 +3,8 @@
 
 #include <NewPing.h>
 
-const int WINDOW_WIDTH = 500; // In mm
-const int HUMAN_DETECTION_DISTANCE = 400; // In mm
+const int WINDOW_WIDTH = 750; // In mm
+const int HUMAN_DETECTION_DISTANCE = 600; // In mm
 
 class SonarWrapper {
     public:
