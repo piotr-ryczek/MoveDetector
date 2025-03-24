@@ -210,18 +210,29 @@ void setup() {
   xTaskCreate(wifiTask, "WifiTask", 4096, NULL, 1, &WifiTask);
   xTaskCreate(ntpTask, "NTPTask", 2048, NULL, 1, &NTPTask);
 
-  delay(10000); // 10s delay to get out of the room while initializing the system
+  // delay(10000); // 10s delay to get out of the room while initializing the system
+  delay(5000);
+
+  Serial.println("Starting...");
 }
 
 void loop() {
-  delay(50);
-
+  
   if (!isWifiConnected || !hasNTPAlreadyConfigured || todayDate == "") {
     return;
   }
 
-  insideIsDetected = sonarInside.checkIsDetected();
-  outsideIsDetected = sonarOutside.checkIsDetected();
+  auto [insideIsDetected, insideDistance] = sonarInside.checkIsDetected();
+  delay(25);
+  auto [outsideIsDetected, outsideDistance] = sonarOutside.checkIsDetected();
+  delay(25);
+
+  if (insideDistance == 0 || outsideDistance == 0) {
+    Serial.println("Distance is 0, possible faulty data from sensor - ignoring");
+    return;
+  }
+  // Serial.println("Inside is detected: " + String(insideDistance));
+  // Serial.println("Outside is detected: " + String(outsideDistance));
 
   int result = personDetector.update(insideIsDetected, outsideIsDetected);
 

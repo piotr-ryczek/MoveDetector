@@ -8,6 +8,8 @@ int SonarWrapper::getDistanceInMM() {
     return uS / 5.8;
 }
 
-bool SonarWrapper::checkIsDetected() {
-    return this->getDistanceInMM() < HUMAN_DETECTION_DISTANCE;
+std::tuple<bool, int> SonarWrapper::checkIsDetected() {
+    int distance = this->getDistanceInMM();
+
+    return std::make_tuple(distance < HUMAN_DETECTION_DISTANCE, distance);
 }

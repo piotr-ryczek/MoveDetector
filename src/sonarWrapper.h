@@ -1,6 +1,7 @@
 #ifndef SONAR_WRAPPER_H
 #define SONAR_WRAPPER_H
 
+#include <tuple>
 #include <NewPing.h>
 
 const int WINDOW_WIDTH = 750; // In mm
@@ -10,7 +11,7 @@ class SonarWrapper {
     public:
         SonarWrapper(int trigPin, int echoPin, int maxDistance);
         int getDistanceInMM();
-        bool checkIsDetected();
+        std::tuple<bool, int> checkIsDetected();
     private:
         NewPing sonar;
 };
